@@ -89,6 +89,7 @@ class Bird:
         
         if not sum_mv == [0, 0]:
             self.dire = tuple(sum_mv)
+            
 
 class Beam:
     """
