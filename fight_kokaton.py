@@ -144,7 +144,7 @@ class Bomb:
 class Score:#
     def __init__(self):
         """
-        scoreを表示させるためのイニシャライズ
+        スコア文字Surfaceを生成する
         """
         self.fonto = pg.font.SysFont("hgp創英角ﾎﾟｯﾌﾟ体", 30)
         self.color = (0, 0, 255)
@@ -153,7 +153,7 @@ class Score:#
     
     def update(self, screen: pg.Surface):
         """
-        爆弾を速度ベクトルself.vx, self.vyに基づき移動させる
+        加算していくscoreを表示する
         引数 screen：画面Surface
         """
         self.img = self.fonto.render(f"スコア:{self.score}", 0, self.color)
