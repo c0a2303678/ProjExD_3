@@ -173,7 +173,7 @@ def main():
                     bird.change_img(6, screen)
 
         key_lst = pg.key.get_pressed()
-        bird.update(key_lst, screen)
+        bird.update(key_lst, screen)  
         if beam is not None:
             beam.update(screen) #ここでupdateメソッドを呼び出さないと使えない  
         if bomb is not None:
