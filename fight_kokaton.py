@@ -199,6 +199,7 @@ def main():
                 if beamMulti[j] is not None:
                     if bombs[i] is not None:
                         if beamMulti[j].rct.colliderect(bombs[i].rct):
+                            num.score += 1
                             bombs[i] = None
                             beamMulti[j] = None
                             bird.change_img(6,screen)
