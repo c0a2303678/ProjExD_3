@@ -160,6 +160,25 @@ class Score:#
         screen.blit(self.img,[100, HEIGHT-50])
 
 
+class explosion():
+    def __init__(self,bomb:Bomb):
+        self.effect = pg.image.load("fig/explosion.gif")
+        self.feffect =pg.transform.flip(self.effect,True,False)
+        self.lst=[self.effect,self.feffect]
+        self.upgazou=self.lst[0]
+        self.life = 20
+        self.rct = self.upgazou.get_rect()
+        self.rct.center = bomb.rct.center
+    def update(self,screen:pg.Surface):
+        self.life -= 1
+        if self.life >= 0:
+            if self.life % 2 ==1 :
+                self.upgazou = self.lst[0]
+            else:
+                self.upgazou = self.lst[1]
+        screen.blit(self.upgazou,self.rct)
+
+
 def main():
     pg.display.set_caption("たたかえ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))    
@@ -171,6 +190,7 @@ def main():
     clock = pg.time.Clock()
     tmr = 0
     beamMulti = []
+    explosions = []
     num = Score()
     
     while True:
@@ -199,12 +219,14 @@ def main():
                 if beamMulti[j] is not None:
                     if bombs[i] is not None:
                         if beamMulti[j].rct.colliderect(bombs[i].rct):
+                            explosions.append(explosion(bombs[i]))
                             num.score += 1
                             bombs[i] = None
                             beamMulti[j] = None
                             bird.change_img(6,screen)
         bombs = [bomb for bomb in bombs if bomb is not None]
         beamMulti = [beam for beam in beamMulti if beam is not None]
+        explosions =[exp for exp in explosions if exp.life >= 0]
 
         key_lst = pg.key.get_pressed()
         bird.update(key_lst, screen)  
@@ -213,6 +235,8 @@ def main():
                 beam.update(screen)  
         for bomb in bombs:
             bomb.update(screen)
+        for exp in explosions:
+            exp.update(screen)
         num.update(screen)
         pg.display.update()
         tmr += 1
