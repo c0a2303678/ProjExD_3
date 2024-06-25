@@ -158,7 +158,6 @@ class Score:#
         """
         self.img = self.fonto.render(f"スコア:{self.score}", 0, self.color)
         screen.blit(self.img,[100, HEIGHT-50])
-        
 
 
 def main():
