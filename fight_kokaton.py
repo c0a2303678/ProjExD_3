@@ -141,6 +141,26 @@ class Bomb:
         screen.blit(self.img, self.rct)
 
 
+class Score:#
+    def __init__(self):
+        """
+        scoreを表示させるためのイニシャライズ
+        """
+        self.fonto = pg.font.SysFont("hgp創英角ﾎﾟｯﾌﾟ体", 30)
+        self.color = (0, 0, 255)
+        self.score = 0
+        self.img = self.fonto.render(f"スコア:{self.score}", 0, self.color)
+    
+    def update(self, screen: pg.Surface):
+        """
+        爆弾を速度ベクトルself.vx, self.vyに基づき移動させる
+        引数 screen：画面Surface
+        """
+        self.img = self.fonto.render(f"スコア:{self.score}", 0, self.color)
+        screen.blit(self.img,[100, HEIGHT-50])
+        
+
+
 def main():
     pg.display.set_caption("たたかえ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))    
@@ -151,6 +171,8 @@ def main():
     bombs = [Bomb((255, 0, 0), 10) for _ in range(NUM_OF_BOMBS)]
     clock = pg.time.Clock()
     tmr = 0
+    num = Score()
+    
     while True:
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -174,6 +196,7 @@ def main():
         for i in range(len(bombs)):
             if beam is not None:
                 if bombs[i].rct.colliderect(beam.rct):
+                    num.score += 1
                     bombs[i] = None
                     beam = None
                     bird.change_img(6, screen)
@@ -185,6 +208,7 @@ def main():
             beam.update(screen) #ここでupdateメソッドを呼び出さないと使えない  
         for bomb in bombs:
             bomb.update(screen)
+        num.update(screen)
         pg.display.update()
         tmr += 1
         clock.tick(50)
